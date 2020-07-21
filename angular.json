@@ -64,6 +64,7 @@
               "projects/ngx-mat-table-example/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "projects/ngx-mat-table-example/src/styles.css"
             ],
             "scripts": []
@@ -128,6 +129,7 @@
               "projects/ngx-mat-table-example/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "projects/ngx-mat-table-example/src/styles.css"
             ],
             "scripts": []
@@ -159,6 +161,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "ngx-mat-table"
 }

@@ -1,1 +1,51 @@
-<h1>ngx-mat-table library works</h1>
+<table
+  mat-table
+  [dataSource]="dataSource"
+  matSort
+  matSortDisableClear="true"
+  [matSortActive]="defaultSort.active"
+  [matSortDirection]="defaultSort.direction"
+>
+  <ng-container *ngFor="let column of columns" matColumnDef="column">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ column }}
+    </th>
+    <td mat-cell *matCellDef="let element; let i = index">
+      {{ element[column] }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="noData">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="displayedColumns.length"
+    >
+      <ng-container *ngIf="!(error$ | async) && !loading">
+        <span>No Data</span>
+      </ng-container>
+      <ng-container *ngIf="(error$ | async) && !loading">
+        <span>System Failure</span>
+        <span>Error</span>
+        <span (click)="retry()">Retry</span>
+      </ng-container>
+      <ng-container *ngIf="loading">
+        <span>Retrieving data...</span>
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <ng-container *ngIf="total && !loading">
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </ng-container>
+  <ng-container *ngIf="!total || loading">
+    <tr mat-row *matRowDef="let row; columns: ['noData']"></tr>
+  </ng-container>
+</table>
+
+<mat-paginator
+  [length]="total"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+></mat-paginator>
