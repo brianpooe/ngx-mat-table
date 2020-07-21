@@ -12,6 +12,12 @@
     },
     {
       "path": "./projects/ngx-mat-table/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ngx-mat-table-example/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/ngx-mat-table-example/tsconfig.spec.json"
     }
 ]
 }
