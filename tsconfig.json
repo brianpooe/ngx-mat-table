@@ -6,5 +6,12 @@
 */
 {
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./projects/ngx-mat-table/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ngx-mat-table/tsconfig.spec.json"
+    }
+]
 }
