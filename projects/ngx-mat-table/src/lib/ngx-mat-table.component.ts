@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ngx-ngx-mat-table',
-  template: `
-    <p>
-      ngx-mat-table works!
-    </p>
-  `,
-  styles: [
-  ]
+  selector: 'ngx-mat-table',
+  templateUrl: './ngx-mat-table.component.html',
 })
 export class NgxMatTableComponent implements OnInit {
 
