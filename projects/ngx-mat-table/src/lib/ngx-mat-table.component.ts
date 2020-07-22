@@ -24,13 +24,11 @@ export class NgxMatTableComponent implements OnInit {
 
   @Input() public filterSubject = new Subject<string>();
 
-  @Input() public error$: Observable<boolean>;
+  @Input('error') public error$: Observable<boolean>;
 
   public noData: [];
 
   public ngOnInit(): void {
-    console.log('this.tableCols?.map(({ key }) => key):', this.tableCols?.map(({ key }) => key));
-    console.log('this.dataSource', this.dataSource);
   }
 
   // We will need this getter to exctract keys from tableCols

@@ -1,3 +1,4 @@
+import { Observable, of } from 'rxjs';
 import { Component } from '@angular/core';
 
 @Component({
@@ -105,12 +106,14 @@ export class AppComponent {
   public pageSizeOptions: number[];
   public pageSize: number;
   public total: number;
+  public error$: Observable<boolean>;
 
   constructor() {
     this.pageSize = 10;
     this.pageSizeOptions = [3, 5, 10];
     this.loading = false;
     this.total = 10;
+    this.error$ = of(false);
   }
 
   public onActionHandler(event: any) {
