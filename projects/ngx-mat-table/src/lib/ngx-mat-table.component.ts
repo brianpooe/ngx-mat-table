@@ -14,60 +14,33 @@ export class NgxMatTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  @Input() public displayedColumns: string[];
+  @Output("onActionHandler") emitter = new EventEmitter();
+  @Input("data") dataSource: any[];
+  @Input("cols") tableCols: any[];
   @Input() public total: number;
   @Input() public loading: boolean;
-  @Input() public error$: Observable<boolean>;
-  @Input() public filterSubject = new Subject<string>();
-  @Input() public data: any;
   @Input() public pageSize: number;
-  @Input() public pageSizeOptions: string[];
+  @Input() public pageSizeOptions: number[];
 
-  @Output() loadData: EventEmitter<any> = new EventEmitter<any>();
+  @Input() public filterSubject = new Subject<string>();
 
-  public dataSource: MatTableDataSource<any>;
-  public defaultSort: Sort = { active: 'role', direction: 'asc' };
+  @Input() public error$: Observable<boolean>;
+
   public noData: [];
 
-  private filter: string = "";
-  private subscription: Subscription = new Subscription();
-
   public ngOnInit(): void {
-    this.initializeData(this.data);
-    if (this.loading) {
-      this.dataSource = new MatTableDataSource(this.noData);
-    }
+    console.log('this.tableCols?.map(({ key }) => key):', this.tableCols?.map(({ key }) => key));
+    console.log('this.dataSource', this.dataSource);
   }
 
-  public ngAfterViewInit(): void {
-    this.loadDataCall();
-    let filter$ = this.filterSubject.pipe(
-      debounceTime(150),
-      distinctUntilChanged(),
-      tap((value: string) => {
-        this.paginator.pageIndex = 0;
-        this.filter = value;
-      })
-    );
-
-    let sort$ = this.sort.sortChange.pipe(tap(() => this.paginator.pageIndex = 0));
-
-    this.subscription.add(merge(filter$, sort$, this.paginator.page).pipe(
-      tap(() => this.loadDataCall())
-    ).subscribe());
+  // We will need this getter to exctract keys from tableCols
+  get keys() {
+    return this.tableCols?.map(({ key }) => key)
   }
 
-  private loadDataCall(): void {
-    this.loadData.emit(JSON.stringify({
-      filter: this.filter.toLocaleLowerCase(),
-      pageIndex: this.paginator.pageIndex,
-      pageSize: this.paginator.pageSize,
-      sortDirection: this.sort.direction,
-      sortField: this.sort.active
-    }))
-  }
+  public retry(): void { }
 
-  private initializeData(data: any[]): void {
-    this.dataSource = new MatTableDataSource(data.length ? data : this.noData);
+  emitAction(event: any) {
+    this.emitter.emit(event);
   }
 }

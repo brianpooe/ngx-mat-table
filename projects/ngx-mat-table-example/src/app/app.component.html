@@ -1,8 +1,11 @@
 <div class="container">
   <ngx-mat-table
-    loading="false"
-    pageSizeOptions="[3,5,10]"
-    pageSize="10"
-    displayedColumns="['id','description']"
+    [loading]="loading"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize"
+    [total]="total"
+    [cols]="cols"
+    [data]="USERS_DATA"
+    (onActionHandler)="onActionHandler($event)"
   ></ngx-mat-table>
 </div>
