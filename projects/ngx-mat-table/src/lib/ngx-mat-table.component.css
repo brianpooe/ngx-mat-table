@@ -1,0 +1,17 @@
+.no-data-row {
+    height: 198px;
+}
+
+.no-data-row .no-data-cell {
+    text-align: center;
+}
+
+.no-data-row .no-data-cell>span {
+    display: block;
+    margin-top: 4px;
+}
+
+.no-data-row .no-data-cell>span.retry {
+    display: block;
+    cursor: pointer;
+}

@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -14,7 +15,8 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatIconModule
   ],
   exports: [NgxMatTableComponent]
 })
