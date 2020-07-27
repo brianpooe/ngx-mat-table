@@ -1,14 +1,24 @@
 <mat-form-field style="padding-left: 2em;">
-  <input matInput placeholder="Search" />
+  <input
+    matInput
+    placeholder="Search"
+    (keyup)="filterSubject.next($event.target.value)"
+  />
 </mat-form-field>
 
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="dataSource" matSort matSortDisableClear="true">
+  <mat-table
+    [dataSource]="dataSource"
+    matSort
+    matSortDisableClear="true"
+    [matSortActive]="defaultSort.active"
+    [matSortDirection]="defaultSort.direction"
+  >
     <ng-container
       *ngFor="let col of tableCols$ | async as tableCols; let i = index"
       [matColumnDef]="col.key"
     >
-      <mat-header-cell *matHeaderCellDef>{{
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{
         tableCols[i]["display"]
       }}</mat-header-cell>
       <mat-cell *matCellDef="let element">
