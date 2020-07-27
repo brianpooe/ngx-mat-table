@@ -5,7 +5,7 @@
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="dataSource" matSort matSortDisableClear="true">
     <ng-container
-      *ngFor="let col of tableCols; let i = index"
+      *ngFor="let col of tableCols$ | async as tableCols; let i = index"
       [matColumnDef]="col.key"
     >
       <mat-header-cell *matHeaderCellDef>{{
@@ -30,12 +30,14 @@
             <button
               mat-icon-button
               color="warn"
-              style="margin: 5px;"
+              style="margin: 5px; cursor: pointer;"
               *ngFor="let action of col.config.actions"
               (click)="emitAction(action)"
               attr.aria-label="{{ action }}"
             >
-              <mat-icon> {{ action }}_outline</mat-icon>
+              <mat-icon title="{{ changeTitle(action) }}">
+                {{ action }}_outline</mat-icon
+              >
             </button>
           </ng-container>
         </ng-template>
@@ -48,25 +50,25 @@
         *matCellDef="let element"
         [attr.colspan]="keys.length"
       >
-        <ng-container *ngIf="!(error$ | async) && !loading">
+        <ng-container *ngIf="!(error$ | async) && !(loading$ | async)">
           <span>No Data</span>
         </ng-container>
-        <ng-container *ngIf="(error$ | async) && !loading">
+        <ng-container *ngIf="(error$ | async) && !(loading$ | async)">
           <span>System Failure</span>
           <span>Error</span>
           <span class="retry" (click)="retry()">Retry</span>
         </ng-container>
-        <ng-container *ngIf="loading">
+        <ng-container *ngIf="loading$ | async">
           <span>Retrieving data...</span>
         </ng-container>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="keys; sticky: true"></mat-header-row>
-    <ng-container *ngIf="total && !loading">
+    <ng-container *ngIf="(total$ | async) && !(loading$ | async)">
       <mat-row *matRowDef="let row; columns: keys"></mat-row>
     </ng-container>
-    <ng-container *ngIf="!total || loading">
+    <ng-container *ngIf="!(total$ | async) || (loading$ | async)">
       <mat-row
         *matRowDef="let row; columns: ['noData']"
         class="no-data-row"
@@ -75,8 +77,8 @@
   </mat-table>
 
   <mat-paginator
-    [length]="total"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
+    [length]="total$ | async"
+    [pageSize]="pageSize$ | async"
+    [pageSizeOptions]="pageSizeOptions$ | async"
   ></mat-paginator>
 </div>

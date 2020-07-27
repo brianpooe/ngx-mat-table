@@ -1,12 +1,12 @@
 <div class="container">
   <ngx-mat-table
-    [loading]="loading"
+    [loading]="loading$"
     [error]="error$"
-    [pageSizeOptions]="pageSizeOptions"
-    [pageSize]="pageSize"
-    [total]="total"
-    [cols]="cols"
-    [data]="USERS_DATA"
+    [data]="data$"
+    [tableColumnsAndConfig]="tableColumnsAndConfig$"
+    [pageSize]="pageSize$"
+    [pageSizeOptions]="pageSizeOptions$"
+    [total]="total$"
     (onActionHandler)="onActionHandler($event)"
   ></ngx-mat-table>
 </div>
