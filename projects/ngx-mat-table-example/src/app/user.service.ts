@@ -1,33 +1,32 @@
-import { IDataParams, IUser, IUserResponse } from './user.models';
+import { IDataParams, IUser } from './user.models';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Observable, of, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  private _getFakeusersBehaviourSubject = new ReplaySubject<IUser[]>();
+  public getFakeusersBehaviourSubject = this._getFakeusersBehaviourSubject.asObservable();
+
   constructor() {}
 
-  public loadUsers(params?: IDataParams): Observable<IUserResponse> {
-    // return this.httpClient.post<Customer[]>("localhost:4200/users", params);
-    console.log('params :>> ', params);
-    return params
-      ? of(this.getFakeUsers(params)).pipe(delay(3000))
-      : of({
-          total: users.length,
-          users,
-        });
+  public loadUsers(params?: IDataParams): void {
+    this._getFakeusersBehaviourSubject.next(this.getFakeUsers(params));
   }
 
-  private getFakeUsers(params: IDataParams): IUserResponse {
+  public getTotalUsers(): Observable<number> {
+    return of(users.length);
+  }
+
+  private getFakeUsers(params: IDataParams): IUser[] {
     let data = <IUser[]>[];
 
     data = users.filter(
       (c) =>
         ~c.username.toLocaleLowerCase().indexOf(params.filter) ||
-        ~c.email.toLocaleLowerCase().indexOf(params.filter) ||
-        ~c.lastName.toLocaleLowerCase().indexOf(params.filter)
+        ~c.lastName.toLocaleLowerCase().indexOf(params.filter) ||
+        ~c.email.toLocaleLowerCase().indexOf(params.filter)
     );
 
     data.sort(
@@ -35,14 +34,11 @@ export class UserService {
         (a[params.sortField] > b[params.sortField] ? 1 : -1) *
         (params.sortDirection === 'asc' ? 1 : -1)
     );
-    console.log('data from service :>> ', data);
-    return {
-      total: data.length,
-      users: data.slice(
-        params.pageIndex * params.pageSize,
-        (params.pageIndex + 1) * params.pageSize
-      ),
-    };
+
+    return data.slice(
+      params.pageIndex * params.pageSize,
+      (params.pageIndex + 1) * params.pageSize
+    );
   }
 }
 
@@ -72,7 +68,7 @@ export const users = <IUser[]>[
     _id: 4,
     username: 'Abdelaziz',
     email: 'abdelaziz@abc.xyz',
-    lastName: '',
+    lastName: 'Kindaroro',
     dob: new Date(),
   },
   {

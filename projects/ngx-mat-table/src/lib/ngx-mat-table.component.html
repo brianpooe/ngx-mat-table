@@ -13,6 +13,7 @@
     matSortDisableClear="true"
     [matSortActive]="defaultSort.active"
     [matSortDirection]="defaultSort.direction"
+    multiTemplateDataRows
   >
     <ng-container
       *ngFor="let col of tableCols$ | async as tableCols; let i = index"
@@ -45,9 +46,7 @@
               (click)="emitAction(action)"
               attr.aria-label="{{ action }}"
             >
-              <mat-icon title="{{ changeTitle(action) }}">
-                {{ action }}_outline</mat-icon
-              >
+              <mat-icon title="{{ action }}"> {{ action }}_outline</mat-icon>
             </button>
           </ng-container>
         </ng-template>
@@ -76,13 +75,13 @@
 
     <mat-header-row *matHeaderRowDef="keys; sticky: true"></mat-header-row>
     <ng-container *ngIf="(total$ | async) && !(loading$ | async)">
-      <mat-row *matRowDef="let row; columns: keys"></mat-row>
+      <mat-row
+        *matRowDef="let row; columns: keys"
+        (click)="emitSelected(row)"
+      ></mat-row>
     </ng-container>
     <ng-container *ngIf="!(total$ | async) || (loading$ | async)">
-      <mat-row
-        *matRowDef="let row; columns: ['noData']"
-        class="no-data-row"
-      ></mat-row>
+      <mat-row *matRowDef="let row; columns: ['noData']"></mat-row>
     </ng-container>
   </mat-table>
 

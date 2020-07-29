@@ -3,6 +3,7 @@ import { IUser, ITableColumn } from './user.models';
 import { Observable, of, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IDataParams } from 'dist/ngx-mat-table/lib/models';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public pageSizeOptions$: Observable<number[]>;
   public total$: Observable<number>;
   private subscription: Subscription = new Subscription();
+  private initialParams: IDataParams;
 
   constructor(private readonly userService: UserService) {
     this.loading$ = of(false);
@@ -46,21 +48,25 @@ export class AppComponent implements OnInit, OnDestroy {
         // so we will create a button and create it event click
         config: {
           isAction: true,
-          actions: ['check', 'delete', 'edit'],
+          actions: ['edit', 'delete'],
         },
       },
     ]);
-    this.pageSize$ = of(10);
+    this.pageSize$ = of(3);
     this.pageSizeOptions$ = of([3, 5, 10]);
+    this.initialParams = {
+      filter: '',
+      pageIndex: 0,
+      pageSize: 3,
+      sortDirection: 'asc',
+      sortField: '_id',
+    };
   }
 
   ngOnInit(): void {
-    this.subscription.add(
-      this.userService.loadUsers().subscribe((userResponse) => {
-        this.data$ = of(userResponse.users);
-        this.total$ = of(userResponse.total);
-      })
-    );
+    this.userService.loadUsers(this.initialParams);
+    this.data$ = this.userService.getFakeusersBehaviourSubject;
+    this.total$ = this.userService.getTotalUsers();
   }
 
   ngOnDestroy(): void {
@@ -70,6 +76,10 @@ export class AppComponent implements OnInit, OnDestroy {
   public onActionHandler(event: any) {
     console.log('onActionHandler: ', event);
   }
+  public onSelectedHandler(event: any) {
+    console.log('onSelectedHandler :>> ', event);
+  }
+
   public onLoadDataHandler(event: IDataParams) {
     this.userService.loadUsers(event);
   }
