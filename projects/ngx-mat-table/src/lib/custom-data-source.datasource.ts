@@ -7,7 +7,7 @@ export class CustomDataSource implements DataSource<any> {
   constructor(private data: Observable<any>) {}
 
   loadDataFromCustomDataSource() {
-    this.data.subscribe((tap) => this.dataSubject.next(tap));
+    this.data.subscribe((data) => this.dataSubject.next(data));
   }
 
   connect(collectionViewer: CollectionViewer): Observable<any[]> {

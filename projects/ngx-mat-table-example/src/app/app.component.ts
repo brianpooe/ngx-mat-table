@@ -22,8 +22,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private initialParams: IDataParams;
 
   constructor(private readonly userService: UserService) {
-    this.loading$ = of(false);
-    this.error$ = of(false);
     this.tableColumnsAndConfig$ = of([
       { key: '_id', display: 'User Id' },
       { key: 'username', display: 'Username' },
@@ -52,8 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
         },
       },
     ]);
-    this.pageSize$ = of(3);
-    this.pageSizeOptions$ = of([3, 5, 10]);
     this.initialParams = {
       filter: '',
       pageIndex: 0,
@@ -67,6 +63,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userService.loadUsers(this.initialParams);
     this.data$ = this.userService.getFakeusersBehaviourSubject;
     this.total$ = this.userService.getTotalUsers();
+    this.loading$ = of(false);
+    this.error$ = of(true);
+    this.pageSize$ = of(3);
+    this.pageSizeOptions$ = of([3, 5, 10]);
   }
 
   ngOnDestroy(): void {

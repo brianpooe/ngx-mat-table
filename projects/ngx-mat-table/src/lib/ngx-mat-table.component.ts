@@ -32,7 +32,6 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input('pageSizeOptions') public pageSizeOptions$: Observable<number[]>;
   @Input('total') public total$: Observable<number>;
   @Output() onActionHandler = new EventEmitter();
-  @Output() onSelectedHandler = new EventEmitter();
   @Output() onLoadDataHandler = new EventEmitter<IDataParams>();
 
   @ViewChild('input') input: ElementRef;
@@ -86,9 +85,7 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   emitAction(event: any) {
     this.onActionHandler.emit(event);
   }
-  emitSelected(event: any) {
-    this.onSelectedHandler.emit(event);
-  }
+
   public retry(): void {
     this.emitloadData();
   }

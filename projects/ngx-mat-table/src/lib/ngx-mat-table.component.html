@@ -54,34 +54,50 @@
     </ng-container>
 
     <ng-container matColumnDef="noData">
-      <mat-cell
+      <mat-footer-cell
         class="no-data-cell"
-        *matCellDef="let element"
+        *matFooterCellDef
         [attr.colspan]="keys.length"
       >
-        <ng-container *ngIf="!(error$ | async) && !(loading$ | async)">
-          <span>No Data</span>
-        </ng-container>
-        <ng-container *ngIf="(error$ | async) && !(loading$ | async)">
-          <span>System Failure</span>
-          <span>Error</span>
-          <span class="retry" (click)="retry()">Retry</span>
-        </ng-container>
-        <ng-container *ngIf="loading$ | async">
-          <span>Retrieving data...</span>
-        </ng-container>
-      </mat-cell>
+        <span>No Data</span>
+      </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="errorData">
+      <mat-footer-cell
+        class="no-data-cell"
+        *matFooterCellDef
+        [attr.colspan]="keys.length"
+      >
+        <span>System Failure</span>
+        <span>Error</span>
+        <span class="retry" (click)="retry()">Retry</span>
+      </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loadingData">
+      <mat-footer-cell
+        class="no-data-cell"
+        *matFooterCellDef
+        [attr.colspan]="keys.length"
+      >
+        <span>Retrieving data...</span>
+      </mat-footer-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="keys; sticky: true"></mat-header-row>
     <ng-container *ngIf="(total$ | async) && !(loading$ | async)">
-      <mat-row
-        *matRowDef="let row; columns: keys"
-        (click)="emitSelected(row)"
-      ></mat-row>
+      <mat-row *matRowDef="let row; columns: keys"></mat-row>
     </ng-container>
-    <ng-container *ngIf="!(total$ | async) || (loading$ | async)">
-      <mat-row *matRowDef="let row; columns: ['noData']"></mat-row>
+
+    <ng-container *ngIf="!(total$ | async)">
+      <mat-footer-row *matFooterRowDef="['noData']"></mat-footer-row>
+    </ng-container>
+    <ng-container *ngIf="(error$ | async) && !(total$ | async)">
+      <mat-footer-row *matFooterRowDef="['errorData']"></mat-footer-row>
+    </ng-container>
+    <ng-container *ngIf="loading$ | async">
+      <mat-footer-row *matFooterRowDef="['loadingData']"></mat-footer-row>
     </ng-container>
   </mat-table>
 

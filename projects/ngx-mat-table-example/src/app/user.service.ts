@@ -12,7 +12,10 @@ export class UserService {
   constructor() {}
 
   public loadUsers(params?: IDataParams): void {
-    this._getFakeusersBehaviourSubject.next(this.getFakeUsers(params));
+    setTimeout(
+      () => this._getFakeusersBehaviourSubject.next(this.getFakeUsers(params)),
+      3000
+    );
   }
 
   public getTotalUsers(): Observable<number> {
