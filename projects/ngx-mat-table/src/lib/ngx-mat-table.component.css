@@ -8,7 +8,19 @@
   padding: 5px;
 }
 
-.no-data-cell > span.retry {
-  display: block;
-  cursor: pointer;
+.mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-cell {
+  display: flex;
+  justify-content: center;
+}
+
+.add-search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 5px;
 }

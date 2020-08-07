@@ -3,7 +3,6 @@ import { IUser, ITableColumn } from './user.models';
 import { Observable, of, Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IDataParams } from 'dist/ngx-mat-table/lib/models';
-import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +17,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public pageSize$: Observable<number>;
   public pageSizeOptions$: Observable<number[]>;
   public total$: Observable<number>;
+  public showAddBtn: boolean;
+  public showSearch: boolean;
   private subscription: Subscription = new Subscription();
   private initialParams: IDataParams;
 
@@ -46,7 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
         // so we will create a button and create it event click
         config: {
           isAction: true,
-          actions: ['edit', 'delete'],
+          actions: ['edit', 'delete', 'goTo'],
         },
       },
     ]);
@@ -67,6 +68,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.error$ = of(true);
     this.pageSize$ = of(3);
     this.pageSizeOptions$ = of([3, 5, 10]);
+    this.showAddBtn = true;
+    this.showSearch = true;
   }
 
   ngOnDestroy(): void {
@@ -76,11 +79,19 @@ export class AppComponent implements OnInit, OnDestroy {
   public onActionHandler(event: any) {
     console.log('onActionHandler: ', event);
   }
+
+  public onSelectedData(event: any) {
+    console.log('onSelectedData: ', event);
+  }
   public onSelectedHandler(event: any) {
     console.log('onSelectedHandler :>> ', event);
   }
 
   public onLoadDataHandler(event: IDataParams) {
     this.userService.loadUsers(event);
+  }
+
+  public onAdd() {
+    console.log('add row');
   }
 }

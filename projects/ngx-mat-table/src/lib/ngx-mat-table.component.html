@@ -1,10 +1,14 @@
-<mat-form-field style="padding-left: 2em;">
-  <input
-    matInput
-    placeholder="Search"
-    (keyup)="filterSubject.next($event.target.value)"
-  />
-</mat-form-field>
+<div class="add-search">
+  <button *ngIf="showAddBtn" mat-raised-button (click)="add()">Add</button>
+  <mat-form-field *ngIf="showSearch" style="padding-left: 2em;">
+    <input
+      style="width: 100%;"
+      matInput
+      placeholder="Search"
+      (keyup)="filterSubject.next($event.target.value)"
+    />
+  </mat-form-field>
+</div>
 
 <div class="mat-elevation-z8">
   <mat-table
@@ -19,9 +23,12 @@
       *ngFor="let col of tableCols$ | async as tableCols; let i = index"
       [matColumnDef]="col.key"
     >
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{
-        tableCols[i]["display"]
-      }}</mat-header-cell>
+      <mat-header-cell
+        class="mat-sort-header-container"
+        *matHeaderCellDef
+        mat-sort-header
+        >{{ tableCols[i]["display"] }}</mat-header-cell
+      >
       <mat-cell *matCellDef="let element">
         <!-- Checking if it's a normal column or column with specific config -->
         <ng-container *ngIf="!col.config; else hasConfig">
@@ -40,13 +47,16 @@
           <ng-container *ngIf="col.config.isAction">
             <button
               mat-icon-button
-              color="warn"
-              style="margin: 5px; cursor: pointer;"
               *ngFor="let action of col.config.actions"
-              (click)="emitAction(action)"
               attr.aria-label="{{ action }}"
             >
-              <mat-icon title="{{ action }}"> {{ action }}_outline</mat-icon>
+              <mat-icon
+                (click)="emitAction(action, element)"
+                class="mat-icon"
+                title="{{ action }}"
+              >
+                {{ showIcon(action) }}_outline</mat-icon
+              >
             </button>
           </ng-container>
         </ng-template>
@@ -71,7 +81,7 @@
       >
         <span>System Failure</span>
         <span>Error</span>
-        <span class="retry" (click)="retry()">Retry</span>
+        <button mat-raised-button (click)="retry()">Retry</button>
       </mat-footer-cell>
     </ng-container>
 

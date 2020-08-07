@@ -5,3 +5,8 @@ export interface IDataParams {
   pageIndex: number;
   pageSize: number;
 }
+
+export interface IAction {
+  actionType: string;
+  actionPayload: any;
+}

@@ -12,10 +12,7 @@ export class UserService {
   constructor() {}
 
   public loadUsers(params?: IDataParams): void {
-    setTimeout(
-      () => this._getFakeusersBehaviourSubject.next(this.getFakeUsers(params)),
-      3000
-    );
+    this._getFakeusersBehaviourSubject.next(this.getFakeUsers(params));
   }
 
   public getTotalUsers(): Observable<number> {
@@ -51,7 +48,7 @@ export const users = <IUser[]>[
     username: 'Abderrahmene',
     email: 'abderrahmene@abc.xyz',
     lastName: 'Jenkins',
-    dob: new Date(),
+    dob: new Date()
   },
   {
     _id: 2,
@@ -81,39 +78,39 @@ export const users = <IUser[]>[
     lastName: 'Sanders',
     dob: new Date(),
   },
-  {
-    _id: 6,
-    username: 'Ilyes',
-    email: 'ilyes@abc.xyz',
-    lastName: 'Ferguson',
-    dob: new Date(),
-  },
-  {
-    _id: 7,
-    username: 'Salim',
-    email: 'salim@abc.xyz',
-    lastName: 'Rivera',
-    dob: new Date(),
-  },
-  {
-    _id: 8,
-    username: 'Omar',
-    email: 'omar@abc.xyz',
-    lastName: 'Morales',
-    dob: new Date(),
-  },
-  {
-    _id: 9,
-    username: 'Issam',
-    email: 'issam@abc.xyz',
-    lastName: 'Norris',
-    dob: new Date(),
-  },
-  {
-    _id: 10,
-    username: 'Osman',
-    email: 'osman@abc.xyz',
-    lastName: 'Guerrero',
-    dob: new Date(),
-  },
+  // {
+  //   _id: 6,
+  //   username: 'Ilyes',
+  //   email: 'ilyes@abc.xyz',
+  //   lastName: 'Ferguson',
+  //   dob: new Date(),
+  // },
+  // {
+  //   _id: 7,
+  //   username: 'Salim',
+  //   email: 'salim@abc.xyz',
+  //   lastName: 'Rivera',
+  //   dob: new Date(),
+  // },
+  // {
+  //   _id: 8,
+  //   username: 'Omar',
+  //   email: 'omar@abc.xyz',
+  //   lastName: 'Morales',
+  //   dob: new Date(),
+  // },
+  // {
+  //   _id: 9,
+  //   username: 'Issam',
+  //   email: 'issam@abc.xyz',
+  //   lastName: 'Norris',
+  //   dob: new Date(),
+  // },
+  // {
+  //   _id: 10,
+  //   username: 'Osman',
+  //   email: 'osman@abc.xyz',
+  //   lastName: 'Guerrero',
+  //   dob: new Date(),
+  // },
 ];

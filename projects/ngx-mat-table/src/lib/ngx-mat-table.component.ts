@@ -13,12 +13,14 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable, merge, Subject, Subscription, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { IDataParams } from './models';
+import { IAction, IDataParams } from './models';
 import { CustomDataSource } from './custom-data-source.datasource';
+import { ACTION_ENUM, ICON_ENUM } from './constants';
 
 @Component({
   selector: 'ngx-mat-table',
   templateUrl: './ngx-mat-table.component.html',
+  styleUrls: ['./ngx-mat-table.component.css'],
 })
 export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
@@ -31,7 +33,10 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input('pageSize') public pageSize$: Observable<number>;
   @Input('pageSizeOptions') public pageSizeOptions$: Observable<number[]>;
   @Input('total') public total$: Observable<number>;
+  @Input() public showAddBtn: boolean = true;
+  @Input() public showSearch: boolean = true;
   @Output() onActionHandler = new EventEmitter();
+  @Output() onAddHandler = new EventEmitter();
   @Output() onLoadDataHandler = new EventEmitter<IDataParams>();
 
   @ViewChild('input') input: ElementRef;
@@ -82,8 +87,16 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  emitAction(event: any) {
+  emitAction(actionType: string, actionPayload: any) {
+    const event: IAction = {
+      actionType,
+      actionPayload,
+    };
     this.onActionHandler.emit(event);
+  }
+
+  add() {
+    this.onAddHandler.emit();
   }
 
   public retry(): void {
@@ -98,6 +111,17 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
       })
     );
     return returningKeys;
+  }
+
+  public showIcon(action: string): string {
+    switch (action) {
+      case ACTION_ENUM.EDIT:
+        return ICON_ENUM.EDIT;
+      case ACTION_ENUM.DELETE:
+        return ICON_ENUM.DELETE;
+      case ACTION_ENUM.GOT_TO:
+        return ICON_ENUM.GOT_TO;
+    }
   }
 
   ngOnDestroy(): void {
