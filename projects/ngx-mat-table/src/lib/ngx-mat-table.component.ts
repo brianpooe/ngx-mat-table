@@ -30,8 +30,8 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input('error') public error$: Observable<boolean>;
   @Input('data') data$: Observable<any[]>;
   @Input('tableColumnsAndConfig') tableCols$: Observable<any[]>;
-  @Input('pageSize') public pageSize$: Observable<number>;
-  @Input('pageSizeOptions') public pageSizeOptions$: Observable<number[]>;
+  @Input('pageSize') public pageSize: number;
+  @Input('pageSizeOptions') public pageSizeOptions: number[];
   @Input('total') public total$: Observable<number>;
   @Input() public showAddBtn: boolean = true;
   @Input() public showSearch: boolean = true;
@@ -102,11 +102,13 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   public retry(): void {
     this.emitloadData();
   }
+
   // We will need this getter to exctract keys from tableCols
   get keys() {
     let returningKeys = [];
     this.subscription.add(
       this.tableCols$.subscribe((cols) => {
+        console.log('cols :>> ', cols);
         cols.map(({ key }) => returningKeys.push(key));
       })
     );

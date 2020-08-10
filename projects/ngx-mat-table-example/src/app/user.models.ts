@@ -13,12 +13,18 @@ export interface ITableColumn {
   config?: ITableConfig;
 }
 
+export interface IConfig {
+  display: string;
+  config?: ITableConfig;
+}
+
 export interface ITableConfig {
   isDate?: boolean;
   format?: string;
-  isAction?: boolean;
-  actions?: string[];
+  actions?: Array<TableActions>;
 }
+
+export type TableActions = 'edit' | 'delete' | 'goTo';
 
 export interface IDataParams {
   filter: string;
