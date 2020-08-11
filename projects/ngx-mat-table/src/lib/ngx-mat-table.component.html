@@ -27,8 +27,9 @@
         class="mat-sort-header-container"
         *matHeaderCellDef
         mat-sort-header
-        >{{ tableCols[i]["display"] }}</mat-header-cell
-      >
+        >{{ tableCols[i]["display"] }}
+      </mat-header-cell>
+
       <mat-cell *matCellDef="let element">
         <!-- Checking if it's a normal column or column with specific config -->
         <ng-container *ngIf="!col.config; else hasConfig">

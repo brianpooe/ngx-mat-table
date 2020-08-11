@@ -13,9 +13,13 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable, merge, Subject, Subscription, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { IAction, IDataParams } from './models';
+import {
+  IActionResponse,
+  IDataParams,
+  ACTION_TYPES,
+  ICON_ENUM,
+} from './models';
 import { CustomDataSource } from './custom-data-source.datasource';
-import { ACTION_ENUM, ICON_ENUM } from './constants';
 
 @Component({
   selector: 'ngx-mat-table',
@@ -25,21 +29,21 @@ import { ACTION_ENUM, ICON_ENUM } from './constants';
 export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('input') input: ElementRef;
 
   @Input('loading') public loading$: Observable<boolean>;
   @Input('error') public error$: Observable<boolean>;
-  @Input('data') data$: Observable<any[]>;
-  @Input('tableColumnsAndConfig') tableCols$: Observable<any[]>;
+  @Input('data') public data$: Observable<any[]>;
+  @Input('tableColumnsAndConfig') public tableCols$: Observable<any[]>;
   @Input('pageSize') public pageSize: number;
   @Input('pageSizeOptions') public pageSizeOptions: number[];
   @Input('total') public total$: Observable<number>;
   @Input() public showAddBtn: boolean = true;
   @Input() public showSearch: boolean = true;
-  @Output() onActionHandler = new EventEmitter();
-  @Output() onAddHandler = new EventEmitter();
-  @Output() onLoadDataHandler = new EventEmitter<IDataParams>();
 
-  @ViewChild('input') input: ElementRef;
+  @Output() onActionHandler = new EventEmitter();
+  @Output() onAddTriggerHandler = new EventEmitter();
+  @Output() onLoadDataHandler = new EventEmitter<IDataParams>();
 
   public noData: [];
   public dataSource: CustomDataSource;
@@ -88,15 +92,15 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   emitAction(actionType: string, actionPayload: any) {
-    const event: IAction = {
-      actionType,
-      actionPayload,
+    const event: IActionResponse = {
+      type: actionType,
+      payload: actionPayload,
     };
     this.onActionHandler.emit(event);
   }
 
   add() {
-    this.onAddHandler.emit();
+    this.onAddTriggerHandler.emit();
   }
 
   public retry(): void {
@@ -107,21 +111,20 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   get keys() {
     let returningKeys = [];
     this.subscription.add(
-      this.tableCols$.subscribe((cols) => {
-        console.log('cols :>> ', cols);
-        cols.map(({ key }) => returningKeys.push(key));
-      })
+      this.tableCols$.subscribe((cols) =>
+        cols.map(({ key }) => returningKeys.push(key))
+      )
     );
     return returningKeys;
   }
 
   public showIcon(action: string): string {
     switch (action) {
-      case ACTION_ENUM.EDIT:
+      case ACTION_TYPES.EDIT:
         return ICON_ENUM.EDIT;
-      case ACTION_ENUM.DELETE:
+      case ACTION_TYPES.DELETE:
         return ICON_ENUM.DELETE;
-      case ACTION_ENUM.GOT_TO:
+      case ACTION_TYPES.GOT_TO:
         return ICON_ENUM.GOT_TO;
     }
   }
