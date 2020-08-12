@@ -1,6 +1,7 @@
-import { IDataParams, IUser } from './user.models';
 import { Injectable } from '@angular/core';
 import { Observable, of, ReplaySubject } from 'rxjs';
+import { IDataParams } from 'ngx-mat-table';
+import { IUser } from './user.models';
 
 @Injectable({
   providedIn: 'root',

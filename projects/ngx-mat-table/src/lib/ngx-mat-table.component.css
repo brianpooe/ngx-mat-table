@@ -2,10 +2,9 @@
   text-align: center;
 }
 
-.no-data-cell > span {
-  display: block;
-  margin-top: 4px;
-  padding: 5px;
+.no-data-cell > div > span, button {
+  padding: 3px;
+  margin: 15px 0px;
 }
 
 .mat-sort-header-container {

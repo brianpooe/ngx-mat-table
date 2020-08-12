@@ -13,10 +13,10 @@
 <div class="mat-elevation-z8">
   <mat-table
     [dataSource]="dataSource"
-    matSort
-    matSortDisableClear="true"
     [matSortActive]="defaultSort.active"
     [matSortDirection]="defaultSort.direction"
+    matSortDisableClear="true"
+    matSort
     multiTemplateDataRows
   >
     <ng-container
@@ -64,50 +64,32 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="noData">
-      <mat-footer-cell
-        class="no-data-cell"
-        *matFooterCellDef
-        [attr.colspan]="keys.length"
-      >
-        <span>No Data</span>
-      </mat-footer-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="errorData">
-      <mat-footer-cell
-        class="no-data-cell"
-        *matFooterCellDef
-        [attr.colspan]="keys.length"
-      >
-        <span>System Failure</span>
-        <span>Error</span>
-        <button mat-raised-button (click)="retry()">Retry</button>
-      </mat-footer-cell>
-    </ng-container>
-
     <ng-container matColumnDef="loadingData">
-      <mat-footer-cell
-        class="no-data-cell"
-        *matFooterCellDef
-        [attr.colspan]="keys.length"
-      >
-        <span>Retrieving data...</span>
+      <mat-footer-cell class="no-data-cell" *matFooterCellDef>
+        <div><span *ngIf="loading$ | async">Retrieving data...</span></div>
+        <div *ngIf="(error$ | async) && !(loading$ | async)">
+          <span>System Failure</span>
+          <span>Error</span>
+          <button mat-raised-button (click)="retry()">Retry</button>
+        </div>
+        <div
+          *ngIf="!(data$ | async) && !(loading$ | async) && !(error$ | async)"
+        >
+          <span>no data</span>
+        </div>
       </mat-footer-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="keys; sticky: true"></mat-header-row>
-    <ng-container *ngIf="(total$ | async) && !(loading$ | async)">
+    <ng-container
+      *ngIf="(data$ | async) && !(loading$ | async) && !(error$ | async)"
+    >
       <mat-row *matRowDef="let row; columns: keys"></mat-row>
     </ng-container>
 
-    <ng-container *ngIf="!(total$ | async)">
-      <mat-footer-row *matFooterRowDef="['noData']"></mat-footer-row>
-    </ng-container>
-    <ng-container *ngIf="(error$ | async) && !(total$ | async)">
-      <mat-footer-row *matFooterRowDef="['errorData']"></mat-footer-row>
-    </ng-container>
-    <ng-container *ngIf="loading$ | async">
+    <ng-container
+      *ngIf="(loading$ | async) || (error$ | async) || !(data$ | async)"
+    >
       <mat-footer-row *matFooterRowDef="['loadingData']"></mat-footer-row>
     </ng-container>
   </mat-table>
@@ -118,3 +100,4 @@
     [pageSizeOptions]="pageSizeOptions"
   ></mat-paginator>
 </div>
+Length: {{ (data$ | async).length }}
