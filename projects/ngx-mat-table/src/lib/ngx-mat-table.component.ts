@@ -46,7 +46,7 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   public defaultSort: Sort = { active: '_id', direction: 'asc' };
 
   private subscription: Subscription = new Subscription();
-  private filter: string = '';
+  private filter = '';
 
   public ngOnInit(): void {
     this.dataSource = new CustomDataSource(this.data$);
