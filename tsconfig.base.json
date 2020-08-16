@@ -10,19 +10,16 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    "types": ["jest"],
     "module": "es2020",
-    "lib": ["es2018", "dom"],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "paths": {
       "ngx-mat-table": [
         "dist/ngx-mat-table/ngx-mat-table",
-        "dist/ngx-mat-table/src"
-      ],
-      "ngx-mat-table/*": [
-        "dist/ngx-mat-table/ngx-mat-table/*",
-        "dist/ngx-mat-table/*"
+        "dist/ngx-mat-table"
       ]
-    },
-    "esModuleInterop": true
+    }
   }
 }

@@ -3,7 +3,9 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { IConfig, ITableColumn, TableActions } from './models';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class NgxMatTableService {
   constructor() {}
 
