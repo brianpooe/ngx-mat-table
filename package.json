@@ -13,12 +13,13 @@
     "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
     "test": "ng test",
     "lint": "ng lint",
-    "format:check": "prettier --list-different 'projects/src/**/*.ts'",
-    "format:write": "prettier --write 'projects/src/**/*.ts'",
+    "format:check": "prettier --list-different 'projects/**/*.ts'",
+    "format:write": "prettier --write 'projects/**/*.ts'",
     "adjust-version": "npm-run-all adjust-version:*",
     "adjust-version:lib": "rjp projects/ngx-mat-table/package.json version $VERSION",
     "adjust-version:main": "rjp package.json version $VERSION",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "semantic-release": "semantic-release"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +45,10 @@
     "@commitlint/cli": "^9.1.2",
     "@commitlint/config-conventional": "^9.1.2",
     "@commitlint/prompt": "^9.1.2",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.0.5",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
@@ -61,6 +66,7 @@
     "ng-packagr": "^10.0.0",
     "prettier": "^2.0.5",
     "protractor": "~7.0.0",
+    "semantic-release": "^17.1.1",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.9.5"
@@ -71,10 +77,10 @@
     }
   },
   "lint-staged": {
-    "projects/ngx-mat-table/src/**/*.ts": [
+    "projects/ngx-mat-table/**/*.ts": [
       "prettier --write"
     ],
-    "projects/ngx-mat-table-example/src/**/*.ts": [
+    "projects/ngx-mat-table-example/**/*.ts": [
       "prettier --write"
     ]
   },
@@ -82,5 +88,9 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brianpooe/ngx-mat-table.git"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "ngx-mat-table",
-  "version": "0.0.0-development",
+  "version": "0.0.0",
   "peerDependencies": {
     "@angular/common": "^10.0.4",
     "@angular/core": "^10.0.4",
@@ -8,16 +8,5 @@
   },
   "dependencies": {
     "tslib": "^2.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/brianpooe/ngx-mat-table.git"
-  },
-  "scripts": {
-    "semantic-release": "semantic-release"
-  },
-  "devDependencies": {
-    "@semantic-release/exec": "^5.0.0",
-    "semantic-release": "^17.1.1"
   }
 }
