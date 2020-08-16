@@ -1,12 +1,22 @@
 {
   "name": "ngx-mat-table",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run build:lib && npm run build:example",
+    "copy:readme": "copyfiles ./README.md ./dist/ngx-mat-table",
+    "build:lib": "npm run copy:readme && ng build ngx-mat-table",
+    "build:example": "ng build ngx-mat-table-example --base-href='https://brianpooe.github.io/ngx-mat-table-example/'",
+    "publish:demo": "npx angular-cli-ghpages --dir=./dist/ngx-mat-table-example",
+    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
     "test": "ng test",
     "lint": "ng lint",
+    "format:check": "prettier --list-different 'projects/src/**/*.ts'",
+    "format:write": "prettier --write 'projects/src/**/*.ts'",
+    "adjust-version": "npm-run-all adjust-version:*",
+    "adjust-version:lib": "rjp projects/ngx-mat-table/package.json version $VERSION",
+    "adjust-version:main": "rjp package.json version $VERSION",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -30,10 +40,15 @@
     "@angular-devkit/build-ng-packagr": "~0.1000.4",
     "@angular/cli": "~10.0.4",
     "@angular/compiler-cli": "~10.0.5",
-    "@types/node": "^12.11.1",
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
+    "@commitlint/prompt": "^9.1.2",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "copyfiles": "^2.3.0",
+    "husky": "^4.2.5",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
@@ -41,10 +56,28 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "lint-staged": "^10.2.11",
     "ng-packagr": "^10.0.0",
+    "prettier": "^2.0.5",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.9.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "projects/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
