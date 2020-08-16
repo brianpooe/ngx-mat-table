@@ -1,26 +1,11 @@
-import { NgModule } from '@angular/core';
-import { NgxMatTableComponent } from './ngx-mat-table.component';
-
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { NgModule } from '@angular/core';
+import { MaterialModule } from './material/material.module';
+import { NgxMatTableComponent } from './ngx-mat-table.component';
 
 @NgModule({
   declarations: [NgxMatTableComponent],
-  imports: [
-    CommonModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatTableModule,
-    MatIconModule,
-    MatButtonModule
-  ],
+  imports: [CommonModule, MaterialModule],
   exports: [NgxMatTableComponent],
 })
 export class NgxMatTableModule {}
