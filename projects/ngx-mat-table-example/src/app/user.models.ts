@@ -4,7 +4,6 @@ export interface IUser {
   email: string;
   lastName: string;
   dob: Date;
-  gender: string;
 }
 
 export interface IUserResponse {

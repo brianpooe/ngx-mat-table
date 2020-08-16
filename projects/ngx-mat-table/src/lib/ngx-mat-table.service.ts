@@ -20,7 +20,7 @@ export class NgxMatTableService {
       map((values) => values[0]),
       map((value) => Object.keys(value)),
       map((keys) => {
-        let tableColsAndConfig: Array<ITableColumn> = [];
+        const tableColsAndConfig: Array<ITableColumn> = [];
         for (let index = 0; index < keys.length; index++) {
           tableColsAndConfig.push({
             key: keys[index],
@@ -29,15 +29,13 @@ export class NgxMatTableService {
               // This column will hold a date value, so we must format the
               // display to show as a date
               isDate: !!config[index]?.config?.isDate ?? null,
-              format: config[index]?.config?.isDate
-                ? config[index].config.format
-                : null,
+              format: config[index]?.config?.isDate ? config[index].config.format : null,
             },
           });
         }
         // in this column we have actions like activate/block account
         // so we will create a button and create it event click
-        if (actions)
+        if (actions) {
           tableColsAndConfig.push({
             display: 'Action',
             key: 'action',
@@ -46,6 +44,7 @@ export class NgxMatTableService {
               actions,
             },
           });
+        }
         return tableColsAndConfig;
       }),
       take(1)

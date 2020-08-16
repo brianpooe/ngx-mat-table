@@ -7,13 +7,13 @@ import { IUser } from './user.models';
   providedIn: 'root',
 })
 export class UserService {
-  private _getFakeusersBehaviourSubject = new ReplaySubject<IUser[]>();
-  public getFakeusersBehaviourSubject = this._getFakeusersBehaviourSubject.asObservable();
+  private getFakeusersBehaviourRelaySubject = new ReplaySubject<IUser[]>();
+  public getFakeusersBehaviourSubject$ = this.getFakeusersBehaviourRelaySubject.asObservable();
 
   constructor() {}
 
   public loadUsers(params?: IDataParams): void {
-    this._getFakeusersBehaviourSubject.next(this.getFakeUsers(params));
+    this.getFakeusersBehaviourRelaySubject.next(this.getFakeUsers(params));
   }
 
   public getTotalUsers(): Observable<number> {
@@ -21,7 +21,7 @@ export class UserService {
   }
 
   private getFakeUsers(params: IDataParams): IUser[] {
-    let data = <IUser[]>[];
+    let data: IUser[] = [];
 
     data = users.filter(
       (c) =>
@@ -31,19 +31,14 @@ export class UserService {
     );
 
     data.sort(
-      (a, b) =>
-        (a[params.sortField] > b[params.sortField] ? 1 : -1) *
-        (params.sortDirection === 'asc' ? 1 : -1)
+      (a, b) => (a[params.sortField] > b[params.sortField] ? 1 : -1) * (params.sortDirection === 'asc' ? 1 : -1)
     );
 
-    return data.slice(
-      params.pageIndex * params.pageSize,
-      (params.pageIndex + 1) * params.pageSize
-    );
+    return data.slice(params.pageIndex * params.pageSize, (params.pageIndex + 1) * params.pageSize);
   }
 }
 
-export const users = <IUser[]>[
+export const users: IUser[] = [
   {
     _id: 1,
     username: 'Abderrahmene',

@@ -13,12 +13,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable, merge, Subject, Subscription, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import {
-  IActionResponse,
-  IDataParams,
-  ACTION_TYPES,
-  ICON_ENUM,
-} from './models';
+import { IActionResponse, IDataParams, ACTION_TYPES, ICON_ENUM } from './models';
 import { CustomDataSource } from './custom-data-source.datasource';
 
 @Component({
@@ -38,8 +33,8 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input('pageSize') public pageSize: number;
   @Input('pageSizeOptions') public pageSizeOptions: number[];
   @Input('total') public total$: Observable<number>;
-  @Input() public showAddBtn: boolean = true;
-  @Input() public showSearch: boolean = true;
+  @Input() public showAddBtn = true;
+  @Input() public showSearch = true;
 
   @Output() onActionHandler = new EventEmitter();
   @Output() onAddTriggerHandler = new EventEmitter();
@@ -59,7 +54,7 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
-    let filter$ = this.filterSubject.pipe(
+    const filter$ = this.filterSubject.pipe(
       debounceTime(150),
       distinctUntilChanged(),
       tap((value: string) => {
@@ -91,7 +86,7 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  emitAction(actionType: string, actionPayload: any) {
+  emitAction(actionType: string, actionPayload: any): void {
     const event: IActionResponse = {
       type: actionType,
       payload: actionPayload,
@@ -99,7 +94,7 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onActionHandler.emit(event);
   }
 
-  add() {
+  add(): void {
     this.onAddTriggerHandler.emit();
   }
 
@@ -108,13 +103,9 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   // We will need this getter to exctract keys from tableCols
-  get keys() {
-    let returningKeys = [];
-    this.subscription.add(
-      this.tableCols$.subscribe((cols) =>
-        cols.map(({ key }) => returningKeys.push(key))
-      )
-    );
+  get keys(): Array<string> {
+    const returningKeys = [];
+    this.subscription.add(this.tableCols$.subscribe((cols) => cols.map(({ key }) => returningKeys.push(key))));
     return returningKeys;
   }
 

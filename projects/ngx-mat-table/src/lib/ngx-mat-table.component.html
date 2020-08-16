@@ -1,12 +1,7 @@
 <div class="add-search">
   <button *ngIf="showAddBtn" mat-raised-button (click)="add()">Add</button>
   <mat-form-field *ngIf="showSearch" style="padding-left: 2em;">
-    <input
-      style="width: 100%;"
-      matInput
-      placeholder="Search"
-      (keyup)="filterSubject.next($event.target.value)"
-    />
+    <input style="width: 100%;" matInput placeholder="Search" (keyup)="filterSubject.next($event.target.value)" />
   </mat-form-field>
 </div>
 
@@ -19,15 +14,9 @@
     matSort
     multiTemplateDataRows
   >
-    <ng-container
-      *ngFor="let col of tableCols$ | async as tableCols; let i = index"
-      [matColumnDef]="col.key"
-    >
-      <mat-header-cell
-        class="mat-sort-header-container"
-        *matHeaderCellDef
-        mat-sort-header
-        >{{ tableCols[i]["display"] }}
+    <ng-container *ngFor="let col of tableCols$ | async as tableCols; let i = index" [matColumnDef]="col.key">
+      <mat-header-cell class="mat-sort-header-container" *matHeaderCellDef mat-sort-header
+        >{{ tableCols[i]['display'] }}
       </mat-header-cell>
 
       <mat-cell *matCellDef="let element">
@@ -46,16 +35,8 @@
           <!-- if this column is action, we will loop through each action and show
       it as a mat-button -->
           <ng-container *ngIf="col.config.isAction">
-            <button
-              mat-icon-button
-              *ngFor="let action of col.config.actions"
-              attr.aria-label="{{ action }}"
-            >
-              <mat-icon
-                (click)="emitAction(action, element)"
-                class="mat-icon"
-                title="{{ action }}"
-              >
+            <button mat-icon-button *ngFor="let action of col.config.actions" attr.aria-label="{{ action }}">
+              <mat-icon (click)="emitAction(action, element)" class="mat-icon" title="{{ action }}">
                 {{ showIcon(action) }}_outline</mat-icon
               >
             </button>
@@ -67,36 +48,26 @@
     <ng-container matColumnDef="loadingData">
       <mat-footer-cell class="no-data-cell" *matFooterCellDef>
         <div><span *ngIf="loading$ | async">Retrieving data...</span></div>
-        <div *ngIf="(error$ | async) && !(loading$ | async)">
+        <div *ngIf="(error$ | async) && (loading$ | async) !== null">
           <span>System Failure</span>
           <span>Error</span>
           <button mat-raised-button (click)="retry()">Retry</button>
         </div>
-        <div
-          *ngIf="!(data$ | async) && !(loading$ | async) && !(error$ | async)"
-        >
+        <div *ngIf="(data$ | async) !== null && (loading$ | async) !== null && (error$ | async) !== null">
           <span>no data</span>
         </div>
       </mat-footer-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="keys; sticky: true"></mat-header-row>
-    <ng-container
-      *ngIf="(data$ | async) && !(loading$ | async) && !(error$ | async)"
-    >
+    <ng-container *ngIf="(data$ | async) && (loading$ | async) !== null && (error$ | async) !== null">
       <mat-row *matRowDef="let row; columns: keys"></mat-row>
     </ng-container>
 
-    <ng-container
-      *ngIf="(loading$ | async) || (error$ | async) || !(data$ | async)"
-    >
+    <ng-container *ngIf="(loading$ | async) || (error$ | async) || (data$ | async) !== null">
       <mat-footer-row *matFooterRowDef="['loadingData']"></mat-footer-row>
     </ng-container>
   </mat-table>
 
-  <mat-paginator
-    [length]="total$ | async"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-  ></mat-paginator>
+  <mat-paginator [length]="total$ | async" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
 </div>

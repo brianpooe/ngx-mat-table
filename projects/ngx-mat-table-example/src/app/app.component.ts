@@ -3,12 +3,7 @@ import { IUser } from './user.models';
 import { Observable, of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { IDataParams } from 'dist/ngx-mat-table/lib/models';
-import {
-  NgxMatTableService,
-  ITableColumn,
-  IActionResponse,
-  ACTION_TYPES,
-} from 'ngx-mat-table';
+import { NgxMatTableService, ITableColumn, IActionResponse, ACTION_TYPES } from 'ngx-mat-table';
 
 @Component({
   selector: 'app-root',
@@ -27,10 +22,7 @@ export class AppComponent implements OnInit {
   public showSearch: boolean;
   private initialParams: IDataParams;
 
-  constructor(
-    private readonly userService: UserService,
-    private readonly ngxMatTableService: NgxMatTableService
-  ) {
+  constructor(private readonly userService: UserService, private readonly ngxMatTableService: NgxMatTableService) {
     this.initialParams = {
       filter: '',
       pageIndex: 0,
@@ -40,10 +32,9 @@ export class AppComponent implements OnInit {
     };
   }
 
-  //tableData
   ngOnInit(): void {
     this.userService.loadUsers(this.initialParams);
-    this.data$ = this.userService.getFakeusersBehaviourSubject;
+    this.data$ = this.userService.getFakeusersBehaviourSubject$;
     this.total$ = this.userService.getTotalUsers();
     this.loading$ = of(false);
     this.error$ = of(false);
@@ -70,7 +61,7 @@ export class AppComponent implements OnInit {
     );
   }
 
-  public onActionHandler(event: IActionResponse) {
+  public onActionHandler(event: IActionResponse): void {
     switch (event.type) {
       case ACTION_TYPES.EDIT:
         console.log('action edit :>> ', event.payload);
@@ -86,11 +77,11 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public onLoadDataHandler(event: IDataParams) {
+  public onLoadDataHandler(event: IDataParams): void {
     this.userService.loadUsers(event);
   }
 
-  public onAddTriggerHandler() {
+  public onAddTriggerHandler(): void {
     console.log('add row');
   }
 }
