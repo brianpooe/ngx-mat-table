@@ -9,7 +9,7 @@
     "build:lib": "npm run copy:readme && ng build ngx-mat-table",
     "build:example": "ng build ngx-mat-table && ng build ngx-mat-table-example --base-href='https://brianpooe.github.io/ngx-mat-table-example/'",
     "publish:example": "npx angular-cli-ghpages --dir=./dist/ngx-mat-table-example",
-    "publish:lib": "cd dist/ngx-mat-table && npm publish",
+    "publish:lib": "npx semantic-release",
     "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
     "test": "ng test",
     "lint": "ng lint",
