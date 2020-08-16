@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
         break;
       case ACTION_TYPES.GOT_TO:
         console.log('action go to :>> ', event.payload);
-
+        break;
       default:
         break;
     }
