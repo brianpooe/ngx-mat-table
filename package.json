@@ -70,7 +70,11 @@
     }
   },
   "lint-staged": {
-    "projects/**/*.ts": [
+    "projects/ngx-mat-table/src/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ],
+    "projects/ngx-mat-table-example/src/**/*.ts": [
       "prettier --write",
       "git add"
     ]
