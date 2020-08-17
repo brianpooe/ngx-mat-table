@@ -32,13 +32,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "projects/ngx-mat-table/tsconfig.lib.json",
-              "projects/ngx-mat-table/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["projects/ngx-mat-table/tsconfig.lib.json", "projects/ngx-mat-table/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -59,10 +54,7 @@
             "polyfills": "projects/ngx-mat-table-example/src/polyfills.ts",
             "tsConfig": "projects/ngx-mat-table-example/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "projects/ngx-mat-table-example/src/favicon.ico",
-              "projects/ngx-mat-table-example/src/assets"
-            ],
+            "assets": ["projects/ngx-mat-table-example/src/favicon.ico", "projects/ngx-mat-table-example/src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/ngx-mat-table-example/src/styles.css"
@@ -124,10 +116,7 @@
             "polyfills": "projects/ngx-mat-table-example/src/polyfills.ts",
             "tsConfig": "projects/ngx-mat-table-example/tsconfig.spec.json",
             "karmaConfig": "projects/ngx-mat-table-example/karma.conf.js",
-            "assets": [
-              "projects/ngx-mat-table-example/src/favicon.ico",
-              "projects/ngx-mat-table-example/src/assets"
-            ],
+            "assets": ["projects/ngx-mat-table-example/src/favicon.ico", "projects/ngx-mat-table-example/src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/ngx-mat-table-example/src/styles.css"
@@ -140,24 +129,9 @@
           "options": {
             "tsConfig": [
               "projects/ngx-mat-table-example/tsconfig.app.json",
-              "projects/ngx-mat-table-example/tsconfig.spec.json",
-              "projects/ngx-mat-table-example/e2e/tsconfig.json"
+              "projects/ngx-mat-table-example/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/ngx-mat-table-example/e2e/protractor.conf.js",
-            "devServerTarget": "ngx-mat-table-example:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ngx-mat-table-example:serve:production"
-            }
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

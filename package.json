@@ -18,7 +18,6 @@
     "adjust-version": "npm-run-all adjust-version:*",
     "adjust-version:lib": "rjp projects/ngx-mat-table/package.json version $VERSION",
     "adjust-version:main": "rjp package.json version $VERSION",
-    "e2e": "ng e2e",
     "semantic-release": "semantic-release"
   },
   "private": true,
