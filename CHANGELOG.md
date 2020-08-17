@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/brianpooe/ngx-mat-table/compare/v1.0.0...v1.0.1) (2020-08-17)
+
+
+### Bug Fixes
+
+* **package.json:** added prod flag on build to remove ivy from bundle ([6c1da25](https://github.com/brianpooe/ngx-mat-table/commit/6c1da25b08a100766827f1705eecfd14b3c24616))
+
 # 1.0.0 (2020-08-17)
 
 
