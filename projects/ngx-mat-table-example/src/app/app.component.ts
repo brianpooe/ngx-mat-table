@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
         console.log('action go to :>> ', event.payload);
         break;
       default:
+        console.log('invalid selection');
         break;
     }
   }
