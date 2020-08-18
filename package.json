@@ -7,7 +7,7 @@
     "build": "npm run build:lib && npm run build:example",
     "copy:readme": "copyfiles ./README.md ./dist/ngx-mat-table",
     "build:lib": "npm run copy:readme && ng build ngx-mat-table --prod",
-    "build:example": "ng build ngx-mat-table-example --prod --base-href https://brianpooe.github.io/ngx-mat-table/",
+    "build:example": "ng build ngx-mat-table --prod && ng build ngx-mat-table-example --prod --base-href https://brianpooe.github.io/ngx-mat-table/",
     "publish:example": "npx angular-cli-ghpages --dir=./dist/ngx-mat-table-example",
     "publish:lib": "npx semantic-release",
     "test": "ng test",
