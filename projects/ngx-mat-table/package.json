@@ -1,6 +1,16 @@
 {
   "name": "ngx-mat-table",
   "version": "1.0.2",
+  "description": "Angular library for dynamic material tables with observables and server side pagination.",
+  "keywords": [
+    "angular material",
+    "angular material table",
+    "dynamic material table",
+    "observable material table",
+    "server side pagination",
+    "angular pagination"
+  ],
+  "author": "Brian Pooe",
   "peerDependencies": {
     "@angular/common": "^10.0.4",
     "@angular/core": "^10.0.4",
@@ -8,5 +18,10 @@
   },
   "dependencies": {
     "tslib": "^2.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brianpooe/ngx-mat-table.git"
+  },
+  "license": "MIT"
 }
