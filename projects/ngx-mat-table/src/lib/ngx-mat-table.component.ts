@@ -26,13 +26,13 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('input') input: ElementRef;
 
-  @Input('loading') public loading$: Observable<boolean>;
-  @Input('error') public error$: Observable<boolean>;
-  @Input('data') public data$: Observable<any[]>;
+  @Input('loading') private loading$: Observable<boolean>;
+  @Input('error') private error$: Observable<any>;
+  @Input('data') private data$: Observable<any[]>;
+  @Input('pageSize') private pageSize$: Observable<number>;
+  @Input('pageSizeOptions') private pageSizeOptions$: Observable<number[]>;
+  @Input('total') private total$: Observable<number>;
   @Input('tableColumnsAndConfig') public tableCols$: Observable<any[]>;
-  @Input('pageSize') public pageSize: number;
-  @Input('pageSizeOptions') public pageSizeOptions: number[];
-  @Input('total') public total$: Observable<number>;
   @Input() public showAddBtn = true;
   @Input() public showSearch = true;
 
@@ -42,31 +42,43 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public noData: [];
   public dataSource: CustomDataSource;
-  public filterSubject = new Subject<string>();
   public defaultSort: Sort = { active: '_id', direction: 'asc' };
 
   private subscription: Subscription = new Subscription();
-  private filter = '';
 
   public ngOnInit(): void {
-    this.dataSource = new CustomDataSource(this.data$);
+    this.dataSource = new CustomDataSource(
+      this.data$,
+      this.loading$,
+      this.error$,
+      this.pageSize$,
+      this.pageSizeOptions$,
+      this.total$
+    );
     this.dataSource.loadDataFromCustomDataSource();
   }
 
   public ngAfterViewInit(): void {
-    const filter$ = this.filterSubject.pipe(
-      debounceTime(150),
-      distinctUntilChanged(),
-      tap((value: string) => {
-        this.paginator.pageIndex = 0;
-        this.filter = value;
-      })
+    // server-side search
+    this.subscription.add(
+      fromEvent(this.input.nativeElement, 'keyup')
+        .pipe(
+          debounceTime(150),
+          distinctUntilChanged(),
+          tap(() => {
+            this.paginator.pageIndex = 0;
+            this.emitloadData();
+          })
+        )
+        .subscribe()
     );
 
+    // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
+    // on sort or paginate events, load a new page
     this.subscription.add(
-      merge(filter$, this.sort.sortChange, this.paginator.page)
+      merge(this.sort.sortChange, this.paginator.page)
         .pipe(
           tap(() => {
             this.emitloadData();
@@ -78,7 +90,7 @@ export class NgxMatTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   emitloadData(): void {
     this.onLoadDataHandler.emit({
-      filter: this.filter.toLocaleLowerCase(),
+      filter: this.input.nativeElement.value,
       pageIndex: this.paginator.pageIndex,
       pageSize: this.paginator.pageSize,
       sortDirection: this.sort.direction,

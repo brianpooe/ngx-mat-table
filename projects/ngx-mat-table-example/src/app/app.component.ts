@@ -12,11 +12,11 @@ import { NgxMatTableService, ITableColumn, IActionResponse, ACTION_TYPES } from 
 })
 export class AppComponent implements OnInit {
   public loading$: Observable<boolean>;
-  public error$: Observable<boolean>;
+  public error$: Observable<any>;
   public data$: Observable<IUser[]>;
   public tableColumnsAndConfig$: Observable<ITableColumn[]>;
-  public pageSize: number;
-  public pageSizeOptions: number[];
+  public pageSize$: Observable<number>;
+  public pageSizeOptions$: Observable<number[]>;
   public total$: Observable<number>;
   public showAddBtn: boolean;
   public showSearch: boolean;
@@ -37,9 +37,10 @@ export class AppComponent implements OnInit {
     this.data$ = this.userService.getFakeusersBehaviourSubject$;
     this.total$ = this.userService.getTotalUsers();
     this.loading$ = of(false);
-    this.error$ = of(false);
-    this.pageSize = 3;
-    this.pageSizeOptions = [3, 5, 10];
+    this.error$ = of(null);
+    // this.error$ = of({ error: 'Error' });
+    this.pageSize$ = of(3);
+    this.pageSizeOptions$ = of([3, 5, 10]);
     this.showAddBtn = true;
     this.showSearch = true;
     this.tableColumnsAndConfig$ = this.ngxMatTableService.setTableConfig(
