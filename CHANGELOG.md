@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/brianpooe/ngx-mat-table/compare/v1.0.2...v1.0.3) (2020-08-18)
+
+
+### Bug Fixes
+
+* **lib:** added check for data to not show on footer ([ec79cd2](https://github.com/brianpooe/ngx-mat-table/commit/ec79cd2ae14bbb0903c5e79ec1a852f90df4fffe))
+
 ## [1.0.2](https://github.com/brianpooe/ngx-mat-table/compare/v1.0.1...v1.0.2) (2020-08-18)
 
 
