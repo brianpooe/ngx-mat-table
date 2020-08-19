@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/brianpooe/ngx-mat-table/compare/v1.0.4...v1.0.5) (2020-08-19)
+
+
+### Bug Fixes
+
+* **lib:** made it full on observable driven ([0642449](https://github.com/brianpooe/ngx-mat-table/commit/0642449a64c2922985c3797e8a7b2522d084322d))
+
 ## [1.0.4](https://github.com/brianpooe/ngx-mat-table/compare/v1.0.3...v1.0.4) (2020-08-19)
 
 
