@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/brianpooe/ngx-mat-table/compare/v1.0.3...v1.0.4) (2020-08-19)
+
+
+### Bug Fixes
+
+* **package.json:** added keys for easy search of the library ([5c9bdb6](https://github.com/brianpooe/ngx-mat-table/commit/5c9bdb691f5e63f2fd3a538631cce6f188667ce4))
+* **package.json:** resolved incoming conflicts from change log ([eb11dd9](https://github.com/brianpooe/ngx-mat-table/commit/eb11dd901e56b218feaecd9fa52f389b0169c041))
+
 ## [1.0.3](https://github.com/brianpooe/ngx-mat-table/compare/v1.0.2...v1.0.3) (2020-08-18)
 
 
